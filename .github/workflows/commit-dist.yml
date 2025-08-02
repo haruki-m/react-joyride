@@ -26,11 +26,15 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Commit dist folder
-        uses: stefanzweifel/git-auto-commit-action@v6
-        with:
-          commit_message: 'chore: update dist [skip ci]'
-          commit_options: '--no-verify'
-          branch: ${{ github.ref_name }}
-          file_pattern: dist/
-          add_options: '-f'
+        run: |
+          git add -f dist/ # Force add the 'dist' directory, or specific ignored files
+          git commit -m "chore: update dist [skip ci]" --no-verify || echo "No changes to commit"
+
+      - name: Push changes
+        run: git push
