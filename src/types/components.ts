@@ -1,12 +1,13 @@
-import { ElementType, MouseEventHandler, ReactNode, RefCallback } from 'react';
+import { ComponentProps, ElementType, MouseEventHandler, ReactNode, RefCallback } from 'react';
 import { Props as FProps } from 'react-floater';
 import { PartialDeep, SetRequired, Simplify } from '@gilbarbara/types';
 
 import { Actions, Events, Lifecycle, Locale, Origin, Placement, Status, Styles } from './common';
 
-export type FloaterProps = Omit<FProps, 'content' | 'component'>;
-
-export type SelectorOrElement = string | null | HTMLElement;
+type Graphic = (
+  | (ComponentProps<'video'> & { type: 'video' })
+  | (ComponentProps<'img'> & { type: 'image' })
+) & { position: 'left' | 'right' };
 
 export type BaseProps = {
   /**
@@ -29,14 +30,14 @@ export type BaseProps = {
    */
   disableOverlayClose?: boolean;
   /**
+   * @default false
+   */
+  disableScrolling?: boolean;
+  /**
    * Disable the fix to handle "unused" overflow parents.
    * @default false
    */
   disableScrollParentFix?: boolean;
-  /**
-   * @default false
-   */
-  disableScrolling?: boolean;
   /**
    * Options to be passed to react-floater
    */
@@ -142,6 +143,16 @@ export type CallBackProps = {
   type: Events;
 };
 
+export type FloaterProps = Omit<FProps, 'content' | 'component'>;
+
+export type GraphicProps = Simplify<
+  StepMerged & {
+    continuous: boolean;
+    graphic: Graphic;
+    lifecycle: Lifecycle;
+  }
+>;
+
 export type OverlayProps = Simplify<
   StepMerged & {
     continuous: boolean;
@@ -213,6 +224,8 @@ export type Props = Simplify<
   }
 >;
 
+export type SelectorOrElement = string | null | HTMLElement;
+
 export type State = {
   action: Actions;
   controlled: boolean;
@@ -247,6 +260,7 @@ export type Step = Simplify<
      * Options to be passed to react-floater
      */
     floaterProps?: Partial<FloaterProps>;
+    graphic?: Graphic;
     /**
      * Hide the tooltip's footer.
      * @default false

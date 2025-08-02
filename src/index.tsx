@@ -1,19 +1,19 @@
 import { ReactNode, useEffect, useMemo } from 'react';
 import { useSingleton } from '@gilbarbara/hooks';
 
+import { defaultProps } from '~/defaults';
+import { LIFECYCLE, STATUS } from '~/literals';
 import { canUseDOM } from '~/modules/dom';
 import { log, mergeProps } from '~/modules/helpers';
 import { getMergedStep } from '~/modules/step';
 import useJoyrideData from '~/modules/useJoyrideData';
 import { usePortalElement } from '~/modules/usePortalElement';
 
-import { LIFECYCLE, STATUS } from '~/literals';
-
+import Graphic from '~/components/Graphic';
 import Overlay from '~/components/Overlay';
 import Portal from '~/components/Portal';
 import Step from '~/components/Step';
 
-import { defaultProps } from '~/defaults';
 import { Props } from '~/types';
 
 export function Joyride(props: Props) {
@@ -101,12 +101,28 @@ export function Joyride(props: Props) {
         />
       </Portal>
     );
+
+    if (step.graphic) {
+      content.graphic = (
+        <Portal element={element}>
+          <Graphic
+            {...step}
+            continuous={continuous}
+            graphic={
+              typeof step.graphic === 'object' && step.graphic != null ? step.graphic : ({} as any)
+            }
+            lifecycle={lifecycle}
+          />
+        </Portal>
+      );
+    }
   }
 
   return (
     <div className="react-joyride">
       {content.step}
       {content.overlay}
+      {content.graphic}
     </div>
   );
 }

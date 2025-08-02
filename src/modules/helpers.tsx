@@ -9,6 +9,10 @@ import { Actions, AnyObject, Lifecycle, NarrowPlainObject, State, Step } from '~
 
 import { hasPosition } from './dom';
 
+type RemoveType<TObject, TExclude = undefined> = {
+  [Key in keyof TObject as TObject[Key] extends TExclude ? never : Key]: TObject[Key];
+};
+
 interface GetReactNodeTextOptions {
   defaultValue?: any;
   step?: number;
@@ -25,10 +29,6 @@ interface LogOptions {
   /** If true, the message will be a warning */
   warn?: boolean;
 }
-
-type RemoveType<TObject, TExclude = undefined> = {
-  [Key in keyof TObject as TObject[Key] extends TExclude ? never : Key]: TObject[Key];
-};
 
 interface ShouldScrollOptions {
   isFirstStep: boolean;
@@ -148,7 +148,7 @@ export function hideBeacon(step: Step, state: State, continuous: boolean): boole
  * @returns {boolean}
  */
 export function isLegacy(): boolean {
-  return !['chrome', 'safari', 'firefox', 'opera'].includes(getBrowser());
+  return !['chrome', 'firefox', 'opera', 'safari'].includes(getBrowser());
 }
 
 /**
@@ -156,7 +156,7 @@ export function isLegacy(): boolean {
  */
 export function log({ data, debug = false, title, warn = false }: LogOptions) {
   /* eslint-disable no-console */
-  const logFn = warn ? console.warn ?? console.error : console.log;
+  const logFn = warn ? (console.warn ?? console.error) : console.log;
 
   if (debug) {
     if (title && data) {

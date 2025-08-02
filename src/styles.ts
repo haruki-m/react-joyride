@@ -176,6 +176,10 @@ export default function getStyles(props: Props, step: StepMerged) {
       ...spotlight,
       boxShadow: `0 0 0 9999px ${options.overlayColor}, ${options.spotlightShadow}`,
     },
+    graphic: {
+      position: 'absolute',
+      zIndex: options.zIndex + 10,
+    },
     floaterStyles: {
       arrow: {
         color: mergedFloaterProps?.styles?.arrow?.color ?? options.arrowColor,

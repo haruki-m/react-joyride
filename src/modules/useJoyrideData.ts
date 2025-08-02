@@ -11,6 +11,8 @@ import {
 import is from 'is-lite';
 import useTreeChanges from 'tree-changes-hook';
 
+import { defaultProps } from '~/defaults';
+import { ACTIONS, EVENTS, LIFECYCLE, STATUS } from '~/literals';
 import {
   getElement,
   getScrollParent,
@@ -23,9 +25,6 @@ import { hideBeacon, log, mergeProps, shouldScroll } from '~/modules/helpers';
 import { getMergedStep, validateSteps } from '~/modules/step';
 import createStore from '~/modules/store';
 
-import { ACTIONS, EVENTS, LIFECYCLE, STATUS } from '~/literals';
-
-import { defaultProps } from '~/defaults';
 import { Actions, Props, State, Status } from '~/types';
 
 export default function useJoyrideData(
@@ -113,7 +112,7 @@ export default function useJoyrideData(
           const y = offset?.top?.y ?? 0;
           const flipped = !!placement && placement !== step.placement;
 
-          if (['top', 'right', 'left'].includes(placement) && !flipped && !hasCustomScroll) {
+          if (['left', 'right', 'top'].includes(placement) && !flipped && !hasCustomScroll) {
             scrollY = Math.floor(y - scrollOffset);
           } else {
             scrollY -= step.spotlightPadding;
