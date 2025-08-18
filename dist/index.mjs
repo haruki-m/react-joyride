@@ -494,7 +494,7 @@ var defaultOptions = {
   spotlightShadow: "0 0 15px rgba(0, 0, 0, 0.5)",
   textColor: "#333",
   width: 380,
-  zIndex: 100
+  zIndex: 2147483645
 };
 var buttonBase = {
   backgroundColor: "transparent",
