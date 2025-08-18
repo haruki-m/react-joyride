@@ -12,7 +12,7 @@ const defaultOptions = {
   spotlightShadow: '0 0 15px rgba(0, 0, 0, 0.5)',
   textColor: '#333',
   width: 380,
-  zIndex: 100,
+  zIndex: 9999999999,
 } satisfies StylesOptions;
 
 const buttonBase = {

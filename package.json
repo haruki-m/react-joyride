@@ -1,6 +1,6 @@
 {
   "name": "react-joyride",
-  "version": "2.9.3",
+  "version": "2.9.4",
   "description": "Create guided tours for your apps",
   "author": "Gil Barbara <gilbarbara@gmail.com>",
   "repository": {
@@ -137,8 +137,7 @@
         "warn",
         {
           "message": "Don't forget to remove calls to  logger before committing.",
-          "selector":
-          "CallExpression[callee.name='logger']"
+          "selector": "CallExpression[callee.name='logger']"
         }
       ]
     },
